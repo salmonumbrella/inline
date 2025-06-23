@@ -35,6 +35,7 @@ struct Default: ThemeConfig {
       UIColor(hex: "#e2e5e5")!
     }
   })
+  var reactionIncomingSecoundry: UIColor? = .init(hex: "#585b70")!
 }
 
 struct Lavender: ThemeConfig {
