@@ -1,38 +1,26 @@
 import SwiftUI
 
 struct Default: ThemeConfig {
-  var primaryTextColor: UIColor?
+  var primaryTextColor: UIColor? = .init(hex: "#cdd6f4")!
 
-  var secondaryTextColor: UIColor?
+  var secondaryTextColor: UIColor? = .init(hex: "#a6adc8")!
 
   var id: String = "Default"
 
   var name: String = "Default"
 
-  var backgroundColor: UIColor = .systemBackground
+  var backgroundColor: UIColor = .init(hex: "#1e1e2e")!
 
-  var bubbleBackground: UIColor = .init(hex: "#52A5FF")!
-  var incomingBubbleBackground: UIColor = .init(dynamicProvider: { trait in
-    if trait.userInterfaceStyle == .dark {
-      UIColor(hex: "#27262B")!
-    } else {
-      UIColor(hex: "#F2F2F2")!
-    }
-  })
+  var bubbleBackground: UIColor = .init(hex: "#89b4fa")!
+  var incomingBubbleBackground: UIColor = .init(hex: "#45475a")!
 
-  var accent: UIColor = .init(hex: "#52A5FF")!
+  var accent: UIColor = .init(hex: "#89b4fa")!
 
   var reactionOutgoingPrimary: UIColor? = .white
   var reactionOutgoingSecoundry: UIColor? = .white.withAlphaComponent(0.08)
 
   var reactionIncomingPrimary: UIColor? { accent }
-  var reactionIncomingSecoundry: UIColor? = .init(dynamicProvider: { trait in
-    if trait.userInterfaceStyle == .dark {
-      UIColor(hex: "#3c3b43")!
-    } else {
-      UIColor(hex: "#e2e5e5")!
-    }
-  })
+  var reactionIncomingSecoundry: UIColor? = .init(hex: "#585b70")!
 }
 
 struct Lavender: ThemeConfig {
