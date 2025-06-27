@@ -15,12 +15,16 @@ enum Theme {
 
   // MARK: - Colors
 
-  static let colorIconGray: NSColor = .init(name: "colorIconGray") { _ in
-    NSColor(red: 166 / 255, green: 173 / 255, blue: 200 / 255, alpha: 1)
+  static let colorIconGray: NSColor = .init(name: "colorIconGray") { appearance in
+    appearance.name == .darkAqua ?
+      NSColor(red: 146 / 255, green: 146 / 255, blue: 146 / 255, alpha: 1) :
+      NSColor(red: 188 / 255, green: 188 / 255, blue: 188 / 255, alpha: 1)
   }
 
-  static let colorTitleTextGray: NSColor = .init(name: "colorTitleTextGray") { _ in
-    NSColor(red: 186 / 255, green: 194 / 255, blue: 222 / 255, alpha: 1)
+  static let colorTitleTextGray: NSColor = .init(name: "colorTitleTextGray") { appearance in
+    appearance.name == .darkAqua ?
+      NSColor(red: 160 / 255, green: 160 / 255, blue: 160 / 255, alpha: 1) :
+      NSColor(red: 158 / 255, green: 158 / 255, blue: 158 / 255, alpha: 1)
   }
 
   // MARK: - Window
@@ -75,22 +79,28 @@ enum Theme {
   }
 
   // - after bubble -
-  static let messageBubblePrimaryBgColor: NSColor = .init(name: "messageBubblePrimaryBgColor") { _ in
-    NSColor(
-      calibratedRed: 137 / 255,
-      green: 180 / 255,
-      blue: 250 / 255,
+  static let messageBubblePrimaryBgColor: NSColor = .init(name: "messageBubblePrimaryBgColor") { appearance in
+    appearance.name == .darkAqua ? NSColor(
+      calibratedRed: 120 / 255,
+      green: 94 / 255,
+      blue: 212 / 255,
+      alpha: 1.0
+    ) : NSColor(
+      calibratedRed: 143 / 255,
+      green: 116 / 255,
+      blue: 238 / 255,
       alpha: 1.0
     )
   }
 
-  static let messageBubbleSecondaryBgColor: NSColor = .init(name: "messageBubbleSecondaryBgColor") { _ in
-    NSColor(
-      calibratedRed: 69 / 255,
-      green: 71 / 255,
-      blue: 90 / 255,
-      alpha: 1.0
-    )
+  static let messageBubbleSecondaryBgColor: NSColor = .init(name: "messageBubbleSecondaryBgColor") { appearance in
+    appearance.name == .darkAqua ? NSColor.white
+      .withAlphaComponent(0.1) : .init(
+        calibratedRed: 236 / 255,
+        green: 236 / 255,
+        blue: 236 / 255,
+        alpha: 1.0
+      )
   }
 
   /// used for bubbles diff to edge
@@ -122,13 +132,10 @@ enum Theme {
   static let composeTextViewHorizontalPadding: CGFloat = 10.0
   static let composeVerticalPadding: CGFloat = 2.0 // inner, higher makes 2 line compose increase height
   static let composeOuterSpacing: CGFloat = 18 // horizontal
-  static let composeOutlineColor: NSColor = .init(name: "composeOutlineColor") { _ in
-    NSColor(
-      calibratedRed: 88 / 255,
-      green: 91 / 255,
-      blue: 112 / 255,
-      alpha: 1.0
-    )
+  static let composeOutlineColor: NSColor = .init(name: "composeOutlineColor") { appearance in
+    appearance.name == .darkAqua ? NSColor.white
+      .withAlphaComponent(0.1) : NSColor.black
+      .withAlphaComponent(0.09)
   }
 
   // MARK: - Devtools
