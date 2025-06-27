@@ -72,6 +72,7 @@ import {
   Input as SendMessageInput,
   Response as SendMessageResponse,
 } from "@in/server/methods/sendMessage"
+import { scheduleMessageRoute } from "@in/server/methods/scheduleMessage"
 import {
   handler as createPrivateChatHandler,
   Input as CreatePrivateChatInput,
@@ -227,6 +228,7 @@ export const apiV1 = new Elysia({ name: "v1" })
       .use(makeApiRoute("/searchContacts", SearchContactsInput, SearchContactsResponse, searchContactsHandler))
       .use(makeApiRoute("/getChatHistory", GetChatHistoryInput, GetChatHistoryResponse, getChatHistoryHandler))
       .use(makeApiRoute("/sendMessage", SendMessageInput, SendMessageResponse, sendMessageHandler))
+      .use(scheduleMessageRoute)
       .use(
         makeApiRoute("/createPrivateChat", CreatePrivateChatInput, CreatePrivateChatResponse, createPrivateChatHandler),
       )

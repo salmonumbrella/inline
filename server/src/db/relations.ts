@@ -23,6 +23,7 @@ export const relations = defineRelations(
     members: schema.members,
     translations: schema.translations,
     userSettings: schema.userSettings,
+    scheduledMessages: schema.scheduledMessages,
   },
   (r) => ({
     users: {
@@ -270,6 +271,17 @@ export const relations = defineRelations(
       message: r.one.messages({
         from: [r.reactions.chatId, r.reactions.messageId],
         to: [r.messages.chatId, r.messages.messageId],
+      }),
+    },
+
+    scheduledMessages: {
+      channel: r.one.chats({
+        from: r.scheduledMessages.channelId,
+        to: r.chats.id,
+      }),
+      author: r.one.users({
+        from: r.scheduledMessages.authorId,
+        to: r.users.id,
       }),
     },
   }),

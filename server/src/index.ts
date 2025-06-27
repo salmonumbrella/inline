@@ -21,6 +21,7 @@ import { Log, LogLevel } from "@in/server/utils/log"
 import { realtime } from "@in/server/realtime"
 import { integrationsRouter } from "./controllers/integrations/integrationsRouter"
 import type { Server } from "bun"
+import "./jobs/scheduledMessages"
 
 const port = process.env["PORT"] || 8000
 const log = new Log("server", LogLevel.INFO)
