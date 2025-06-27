@@ -44,7 +44,7 @@ final class ProfilePhotoViewModel: ObservableObject {
   @Published var isDragging = false
 
   private let maxFileSize = 10 * 1_024 * 1_024 // 10MB
-  private let supportedImageTypes: Set<UTType> = [.jpeg, .png, .heic]
+  private let supportedImageTypes: Set<UTType> = [.jpeg, .png]
 
   struct ErrorState {
     let title: String
@@ -127,18 +127,18 @@ final class ProfilePhotoViewModel: ObservableObject {
   }
 
   private func uploadImageToServer(_ data: Data, fileType: UTType) async throws {
-    // TODO: ensure it's jpg or png
+    // Only jpeg or png are supported by the backend. Coerce any other type to jpeg.
 
-    let mimeType = switch fileType {
-      case .jpeg:
-        MIMEType.imageJpeg
-      case .png:
-        MIMEType.imagePng
-      default:
-        MIMEType.imageJpeg
+    let sanitizedType: UTType
+    if fileType.conforms(to: .png) {
+      sanitizedType = .png
+    } else {
+      sanitizedType = .jpeg
     }
 
-    let fileName = "profile_photo.\(fileType.preferredFilenameExtension ?? "jpg")"
+    let mimeType = sanitizedType == .png ? MIMEType.imagePng : MIMEType.imageJpeg
+
+    let fileName = "profile_photo.\(sanitizedType.preferredFilenameExtension ?? "jpg")"
 
     let result = try await ApiClient.shared
       .uploadFile(
@@ -170,13 +170,18 @@ final class ProfilePhotoViewModel: ObservableObject {
 
 struct ProfilePhotoView: View {
   @StateObject private var viewModel = ProfilePhotoViewModel()
-  @State private var showImagePicker = false
+  @State private var showImagePickerInternal = false
   let userInfo: UserInfo
   let size: CGFloat
+  var showPicker: Binding<Bool>? = nil
+
+  private var showImagePicker: Binding<Bool> {
+    showPicker ?? $showImagePickerInternal
+  }
 
   var body: some View {
     Button {
-      showImagePicker = true
+      showImagePicker.wrappedValue = true
     } label: {
       ZStack {
         UserAvatar(userInfo: userInfo, size: size)
@@ -208,7 +213,7 @@ struct ProfilePhotoView: View {
       }
     )
     .fileImporter(
-      isPresented: $showImagePicker,
+      isPresented: showImagePicker,
       allowedContentTypes: [.image],
       allowsMultipleSelection: false
     ) { result in

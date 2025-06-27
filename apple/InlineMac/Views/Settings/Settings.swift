@@ -88,19 +88,30 @@ struct AccountSettingsView: View {
 
   struct UserProfile: View {
     @EnvironmentObject private var root: RootData
+    @State private var showImagePicker = false
 
     var body: some View {
-      if let user = root.currentUser {
-        HStack {
-          UserAvatar(user: user, size: 32)
+      if let userInfo = root.currentUserInfo {
+        HStack(spacing: 12) {
+          ProfilePhotoView(userInfo: userInfo, size: 32, showPicker: $showImagePicker)
 
           VStack(alignment: .leading) {
-            Text(user.fullName)
+            Text(userInfo.user.fullName)
               .font(.body)
-            Text(user.email ?? user.username ?? "")
+            Text(userInfo.user.email ?? userInfo.user.username ?? "")
               .font(.footnote)
           }
-        }.padding(.trailing)
+
+          Spacer()
+
+          InlineButton {
+            showImagePicker = true
+          } label: {
+            Text("Upload Photo")
+          }
+          .disabled(showImagePicker)
+        }
+        .padding(.trailing)
       }
     }
   }
